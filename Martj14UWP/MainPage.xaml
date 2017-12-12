@@ -8,6 +8,55 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="0.15*"></RowDefinition>
+
+            <RowDefinition Height="0.85*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="Gainsboro">
+
+            <TextBlock Name="Reg" Text="Registration Form"  
+            TextAlignment="Center" VerticalAlignment="Center"  
+            FontSize="30" FontWeight="Black" FontStyle="Italic"></TextBlock>
+
+        </Border>
+
+        <StackPanel Grid.Row="1">
+
+            <TextBox x:Name="First" PlaceholderText="Enter First Name"  
+            Width="300" Margin="0,50,0,0"></TextBox>
+
+            <TextBox x:Name="Last" PlaceholderText="Enter Last Name"  
+            Width="300" Margin="0,10,0,0"></TextBox>
+
+            <TextBox x:Name="Email" PlaceholderText="Enter Email" Width="300"  
+            Margin="0,10,0,0"></TextBox>
+
+            <TextBox x:Name="Phone" PlaceholderText="PhoneNumber"  
+            Width="300" Margin="0,10,0,0"></TextBox>
+
+            <DatePicker x:Name="Bithdate" Width="300" Margin="0,10,0,0" HorizontalAlignment="Center"></DatePicker>
+
+            <TextBox x:Name="Password" PlaceholderText="Password"  
+            Width="300" Margin="0,10,0,0"></TextBox>
+
+            <TextBox x:Name="Serial" PlaceholderText="Serial Number"  
+            Width="300" Margin="0,10,0,0"></TextBox>
+
+            <RelativePanel x:Name="inside" Grid.Row="1"  
+            HorizontalAlignment="Center" Margin="0,20,0,0">
+
+                <Button x:Name="savebtn" Content="Registre" Height="50"  
+                Width="70" Click="Savebtn_OnClick"></Button>
+               
+
+            </RelativePanel>
+
+        </StackPanel>
+
 
     </Grid>
 </Page>

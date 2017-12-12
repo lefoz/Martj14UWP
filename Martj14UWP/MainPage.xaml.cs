@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.I2c;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -12,19 +14,37 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Core;
+using Core.Model;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Martj14UWP
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+   
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Savebtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            BackgroundWorker bw = new BackgroundWorker();
+            IController c = new Controller();
+            int result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text));
+            switch (result)
+            {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
