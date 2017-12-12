@@ -10,9 +10,9 @@ namespace Core.DataPresistence
 {
     class FileUpStream : IFileUpStream
     {
-        private readonly string _serielNumberFileName = "SerielNumbers.dat";
-        private readonly string _submissionsFileName = "Submissions.bin";
-        private readonly string _loginsFileName = "Logins.dat";
+        private readonly string _serielNumberFileName ="\\SerielNumbers.dat";
+        private readonly string _submissionsFileName = "\\Submissions.bin";
+        private readonly string _loginsFileName = "\\Logins.dat";
 
         public List<string> LoadSerielNumbersFromFile()
         {
@@ -32,12 +32,12 @@ namespace Core.DataPresistence
         public List<Submission> LoadSubmissionsFromFile()
         {
             List<Submission> submissionList = new List<Submission>();
-            //using (Stream stream = File.Open(_submissionsFileName, FileMode.Open))
-            //{
-            //    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            using (Stream stream = File.Open(_submissionsFileName, FileMode.Open))
+            {
+                var bformatter = new IndiePortable.Formatter.BinaryFormatter();
 
-            //    submissionList = (List<Submission>)bformatter.Deserialize(stream);
-            //}
+                submissionList = (List<Submission>)bformatter.Deserialize(stream);
+            }
             //using (StreamReader streamReader = new StreamReader(_submissionsFileName))
             //{
             //    while ((line = streamReader.ReadLine()) != null)

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Devices.I2c;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -28,11 +29,12 @@ namespace Martj14UWP
             this.InitializeComponent();
         }
 
-        private void Savebtn_OnClick(object sender, RoutedEventArgs e)
+        private async void Savebtn_OnClick(object sender, RoutedEventArgs e)
         {
             BackgroundWorker bw = new BackgroundWorker();
             IController c = new Controller();
-            int result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text));
+            int result = 0;
+            await Task.Run(() => result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text)));
             switch (result)
             {
                 case 1:
