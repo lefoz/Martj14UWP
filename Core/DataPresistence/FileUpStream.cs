@@ -4,23 +4,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Storage;
 using Core.Model;
 
 namespace Core.DataPresistence
 {
     class FileUpStream : IFileUpStream
     {
-        private readonly string _serielNumberFileName ="\\SerielNumbers.dat";
-        private readonly string _submissionsFileName = "\\Submissions.bin";
-        private readonly string _loginsFileName = "\\Logins.dat";
+        private const string _serielNumberFileName ="SerielNumbers.dat";
+        private const string _submissionsFileName = "Submissions.bin";
+        private const string _loginsFileName = "Logins.dat";
 
         public List<string> LoadSerielNumbersFromFile()
         {
-            //Dictionary<string, bool> serielDictionary = new Dictionary<string, bool>();
             string line = "";
             List<string> serielNum = new List<string>();
             using (StreamReader streamReader = new StreamReader(new FileStream(_serielNumberFileName, FileMode.Open)))
             {
+                
                 while ((line = streamReader.ReadLine()) != null)
                 {
                     serielNum.Add(line);
@@ -32,7 +34,7 @@ namespace Core.DataPresistence
         public List<Submission> LoadSubmissionsFromFile()
         {
             List<Submission> submissionList = new List<Submission>();
-            using (Stream stream = File.Open(_submissionsFileName, FileMode.Open))
+            using (Stream stream = File.Open(_submissionsFileName,FileMode.Open))
             {
                 var bformatter = new IndiePortable.Formatter.BinaryFormatter();
 
@@ -52,6 +54,7 @@ namespace Core.DataPresistence
         {
             string line = "";
             List<string> loginsList = new List<string>();
+            
             using (StreamReader streamReader = new StreamReader(new FileStream(_loginsFileName, FileMode.Open)))
             {
                 while ((line = streamReader.ReadLine()) != null)

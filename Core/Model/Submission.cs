@@ -40,6 +40,7 @@ namespace Core.Model
             Phonenumber = phonenumber;
             Birthdate = birthdate;
             Password = password;
+            LotterySerial = new List<string>();
             LotterySerial.Add(lotterySerial);
             SubmissionDate = DateTime.Now;
         }

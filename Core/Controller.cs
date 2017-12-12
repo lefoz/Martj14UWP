@@ -29,9 +29,9 @@ namespace Core
             logins = new Dictionary<string, string>();
             lotteryDictionary = new Dictionary<string, bool>();
             submissionList = new List<Submission>();
-            submissionList = getFileUpStream.LoadSubmissionsFromFile();
-            loginInformation.LoadLoginsToDictinary(logins);
-            serielNumberRepository.SerielNumbersFromFile(lotteryDictionary);
+            Task.Run(() => submissionList = getFileUpStream.LoadSubmissionsFromFile());
+            Task.Run(() => loginInformation.LoadLoginsToDictinary(logins));
+            Task.Run(() => serielNumberRepository.SerielNumbersFromFile(lotteryDictionary));
 
         }
         public int AddSubmission(Submission submission)

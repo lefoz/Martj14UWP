@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using Core.Model;
-using BinaryFormatter;
+
 
 namespace Core.DataPresistence
 {

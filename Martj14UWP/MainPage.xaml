@@ -5,6 +5,7 @@
     xmlns:local="using:Martj14UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:WinUX.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -25,7 +26,7 @@
         </Border>
 
         <StackPanel Grid.Row="1">
-
+        
             <TextBox x:Name="First" PlaceholderText="Enter First Name"  
             Width="300" Margin="0,50,0,0"></TextBox>
 
@@ -49,10 +50,10 @@
             <RelativePanel x:Name="inside" Grid.Row="1"  
             HorizontalAlignment="Center" Margin="0,20,0,0">
 
-                <Button x:Name="savebtn" Content="Registre" Height="50"  
-                Width="70" Click="Savebtn_OnClick"></Button>
-               
-
+            <Button x:Name="savebtn" Content="Registre" Height="30"  
+            Width="300" Click="Savebtn_OnClick"></Button>
+            
+            
             </RelativePanel>
 
         </StackPanel>

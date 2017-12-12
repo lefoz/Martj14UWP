@@ -34,7 +34,7 @@ namespace Martj14UWP
             BackgroundWorker bw = new BackgroundWorker();
             IController c = new Controller();
             int result = 0;
-            await Task.Run(() => result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text)));
+            result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text));
             switch (result)
             {
                 case 1:
