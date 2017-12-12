@@ -149,7 +149,14 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="DataPresistence\Logins.dat" />
+    <None Include="DataPresistence\SerielNumbers.dat" />
+    <None Include="DataPresistence\Submissions.bin" />
+    <None Include="Logins.dat" />
+    <None Include="SerielNumbers.dat" />
+    <None Include="Submissions.bin" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
