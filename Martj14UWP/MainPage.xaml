@@ -19,44 +19,54 @@
 
         <Border Grid.Row="0" Background="Gainsboro">
 
-            <TextBlock Name="Reg" Text="Registration Form"  
+            <TextBlock Name="Reg" Text="Martj14 Lottery"  
             TextAlignment="Center" VerticalAlignment="Center"  
             FontSize="30" FontWeight="Black" FontStyle="Italic"></TextBlock>
 
         </Border>
 
-        <StackPanel Grid.Row="1">
-        
-            <TextBox x:Name="First" PlaceholderText="Enter First Name"  
-            Width="300" Margin="0,50,0,0"></TextBox>
+        <Grid Grid.Row="1">
+            <Pivot x:Name="rootPivot" Title="Registre Today or Login" Width="400" Height="500" RequestedTheme="Light" HorizontalAlignment="Center">
+                <PivotItem Header="Registre">
+                    <!--Pivot content goes here-->
+                    <StackPanel x:Name="Panel1">
+                        <TextBox x:Name="First" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="First Name"/>
+                        <TextBox x:Name="Last" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Last Name"/>
+                        <TextBox x:Name="Email" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Email"/>
+                        <TextBox x:Name="Phone" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Phone Number"/>
+                        <TextBox x:Name="Password" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Password"/>
+                        <DatePicker x:Name="BirthDate" HorizontalAlignment="Center" Margin="0,10,0,0"></DatePicker>
+                        <TextBox x:Name="Serial" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Serial Key" AutomationProperties.HelpText="Ex. A99"/>
+                        <RelativePanel x:Name="inside" Grid.Row="1"  
+            HorizontalAlignment="Center" Margin="0,10,0,0">
 
-            <TextBox x:Name="Last" PlaceholderText="Enter Last Name"  
-            Width="300" Margin="0,10,0,0"></TextBox>
+                            <Button x:Name="savebtn" Content="Registre" Height="40"  
+            Width="300" Click="Savebtn_OnClick" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" AutomationProperties.IsRequiredForForm="False"></Button>
 
-            <TextBox x:Name="Email" PlaceholderText="Enter Email" Width="300"  
-            Margin="0,10,0,0"></TextBox>
 
-            <TextBox x:Name="Phone" PlaceholderText="PhoneNumber"  
-            Width="300" Margin="0,10,0,0"></TextBox>
-
-            <DatePicker x:Name="Bithdate" Width="300" Margin="0,10,0,0" HorizontalAlignment="Center"></DatePicker>
-
-            <TextBox x:Name="Password" PlaceholderText="Password"  
-            Width="300" Margin="0,10,0,0"></TextBox>
-
-            <TextBox x:Name="Serial" PlaceholderText="Serial Number"  
-            Width="300" Margin="0,10,0,0"></TextBox>
-
-            <RelativePanel x:Name="inside" Grid.Row="1"  
-            HorizontalAlignment="Center" Margin="0,20,0,0">
-
-            <Button x:Name="savebtn" Content="Registre" Height="30"  
-            Width="300" Click="Savebtn_OnClick"></Button>
-            
-            
-            </RelativePanel>
-
-        </StackPanel>
+                        </RelativePanel>
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem Header="Login">
+                    <StackPanel x:Name="Panel2">
+                        <TextBox x:Name="User" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Email"/>
+                        <TextBox x:Name="UserPassword" Text="" Width="300" AutomationProperties.IsRequiredForForm="True" Margin="0,10,0,0" PlaceholderText="Password"/>
+                        <RelativePanel x:Name="inside2" Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <Button x:Name="Login" Content="login" Height="40" Width="300" Click="Login_Click"></Button>
+                        </RelativePanel>
+                    </StackPanel>
+                </PivotItem>
+            </Pivot>
+           
+            <Popup x:Name="Popup" Width="300" Height="150">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel>
+                        <TextBox x:Name="PopupText" Margin="0,10,0,0"></TextBox>
+                        <Button x:Name="PopupBtn" Content="Ok" Margin="0,10,0,0" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" Click="PopupBtn_OnClick_Click"></Button>
+                    </StackPanel>
+                </Grid>
+            </Popup>
+        </Grid>
 
 
     </Grid>

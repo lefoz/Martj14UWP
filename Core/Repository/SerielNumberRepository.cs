@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.DataPresistence;
+using Core.Model;
 
 namespace Core.Repository
 {
@@ -13,39 +15,42 @@ namespace Core.Repository
         /// Calls serielnumber generator method
         /// </summary>
         /// <param name="amount">The amount of serielnumbers to be generated</param>
-        public void GenerateNewSerielNumbers(int amount, Dictionary<string, bool> lotteryDictionary)
+        public void GenerateNewSerielNumbers(int amount, IDictionary<string, bool> lotteryDictionary)
         {
             ISerielNumberGenerator newGenereter = new SerielNumberGenerator();
             lotteryDictionary = newGenereter.GenerateSerielNumberDictionary(amount);
         }
 
         /// <summary>
-        /// Recives a string list containing the serielnumbers c´recovered from a file on the file system
+        /// Recives a string list containing the serielnumbers recovered from a file on the file system
         /// Splits each string in the a serielnumber and a bool value, adding these as key and value in the seriel dictionary
         /// </summary>
         /// <returns>A bool</returns>
-        public bool SerielNumbersFromFile(Dictionary<string, bool> lotteryDictionary)
+        public async Task<IDictionary<string,bool>>SerielNumbersFromFile()
         {
-            FileUpStream fileUpStream = new FileUpStream();
-            List<string> serielnumbers = fileUpStream.LoadSerielNumbersFromFile();
-            foreach (var item in serielnumbers)
-            {
-                string seriel = item.Substring(0, 4);
-                string value = item.Substring(5);
-                lotteryDictionary.Add(seriel, Convert.ToBoolean(value));
+            IFileUpStream fileUpStream = new FileUpStream();
+            return await fileUpStream.LoadSerielNumbersFromFile();
+            //IList <string> serielnumbers;
+            //IDictionary<string,bool> lotteryDictionary = new Dictionary<string, bool>();
+            //serielnumbers = await fileUpStream.LoadSerielNumbersFromFile();
 
-            }
-            if (lotteryDictionary.Count > 0) return true;
-            return false;
+            //foreach (var item in serielnumbers)
+            //{
+            //    string seriel = item.Substring(0, 4);
+            //    string value = item.Substring(5);
+            //    lotteryDictionary.Add(seriel, Convert.ToBoolean(value));
+
+            //}
+            //return lotteryDictionary;
         }
 
         /// <summary>
         /// Save seerielnumbers to in a file on the file system
         /// </summary>
-        public void SerielNumbersToFile(Dictionary<string, bool> lotteryDictionary)
+        public async Task SerielNumbersToFile(IDictionary<string, bool> lotteryDictionary)
         {
             FileDownStream fileDownStream = new FileDownStream();
-            fileDownStream.SaveSerielNumbersToFile(lotteryDictionary);
+            if (lotteryDictionary != null) await fileDownStream.SaveSerielNumbersToFileAsync(lotteryDictionary);
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace Core.Repository
         /// </summary>
         /// <param name="serielnumber"></param>
         /// <returns></returns>
-        public int LookUpSerielNumber(string serielnumber, Dictionary<string, bool> lotteryDictionary)
+        public int LookUpSerielNumber(string serielnumber, IDictionary<string, bool> lotteryDictionary)
         {
             int lookUpConfirmation = 0;
             if (lotteryDictionary.ContainsKey(serielnumber))
@@ -75,6 +80,16 @@ namespace Core.Repository
                 }
             }
             return lookUpConfirmation;
+        }
+
+        public List<SerialModel> GetSerials(IDictionary<string, bool> lotteryDictionary )
+        {
+            List<SerialModel> serialList = new List<SerialModel>();
+            foreach (var item in lotteryDictionary)
+            {
+                serialList.Add(new SerialModel(item.Key,item.Value));
+            }
+            return serialList;
         }
     }
 }

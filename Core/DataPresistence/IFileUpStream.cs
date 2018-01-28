@@ -6,8 +6,9 @@ namespace Core.DataPresistence
 {
     interface IFileUpStream
     {
-        List<string> LoadLoginsFromFile();
-        List<string> LoadSerielNumbersFromFile();
-        List<Submission> LoadSubmissionsFromFile();
+        Task<bool> isFilePresent(int stage);
+        Task<IDictionary<string, string>> LoadLoginsFromFileAsync();
+        Task<IDictionary<string, bool>> LoadSerielNumbersFromFile();
+        Task<IList<Submission>> LoadSubmissionsFromFileAsync();
     }
 }

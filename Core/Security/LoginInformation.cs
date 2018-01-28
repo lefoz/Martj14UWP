@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,35 +13,38 @@ namespace Core.Security
         private IFileDownStream saveToFile = new FileDownStream();
         private IFileUpStream loadFromFile = new FileUpStream();
 
-        public void AddLogin(string email, string password, Dictionary<string, string> logins)
+        public void AddLogin(string email, string password, IDictionary<string, string> logins)
         {
             logins.Add(email, password);
-            saveToFile.SaveLoginsToFile(email, password);
+            saveToFile.SaveLoginsToFileAsync(logins);
         }
 
-        public bool CheckLogin(string email, string password, Dictionary<string, string> logins)
+        public bool CheckLogin(string email, string password, IDictionary<string, string> logins)
         {
             if (logins.ContainsKey(email))
-            {
-                if (logins[email].Equals(password)) return true;
-            }
+            return (logins[email].Equals(password));
+            else
             return false;
         }
 
-        public void LoadLoginsToDictinary(Dictionary<string, string> Logins)
+        public async Task<IDictionary<string, string>> LoadLoginsToDictinary()
         {
-            List<string> tempList = loadFromFile.LoadLoginsFromFile();
-            if (tempList != null || tempList.Count > 0)
-            {
-                foreach (var item in tempList)
-                {
+            return await loadFromFile.LoadLoginsFromFileAsync();
+            //IDictionary<string, string> Logins = new Dictionary<string, string>();
+            
 
-                    int devidIndex = item.IndexOf("|");
-                    string email = item.Substring(0, devidIndex);
-                    string password = item.Substring(devidIndex + 1);
-                    Logins.Add(email, password);
-                }
-            }
+            //if (tempList != null && tempList.Count > 0)
+            //{
+            //    foreach (var item in tempList)
+            //    {
+
+            //        int devidIndex = item.IndexOf("|");
+            //        string email = item.Substring(0, devidIndex);
+            //        string password = item.Substring(devidIndex + 1);
+            //        Logins.Add(email, password);
+            //    }
+            //}
+            //return Logins;
         }
     }
 }

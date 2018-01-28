@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -13,33 +14,72 @@ namespace Core.DataPresistence
     class FileUpStream : IFileUpStream
     {
         private const string _serielNumberFileName ="SerielNumbers.dat";
-        private const string _submissionsFileName = "Submissions.bin";
+        private const string _submissionsFileName = "Submissions.xml";
         private const string _loginsFileName = "Logins.dat";
+        private readonly Windows.Storage.StorageFolder _storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;                                                                                              
 
-        public List<string> LoadSerielNumbersFromFile()
+        public async Task<bool> isFilePresent(int stage)
         {
-            string line = "";
-            List<string> serielNum = new List<string>();
-            using (StreamReader streamReader = new StreamReader(new FileStream(_serielNumberFileName, FileMode.Open)))
+            
+            switch (stage)
             {
-                
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    serielNum.Add(line);
-                }
+                case 0:
+                    var subFile = await _storageFolder.TryGetItemAsync(_submissionsFileName);
+                    return subFile != null;
+                case 1:
+                    var serialFile = await _storageFolder.TryGetItemAsync(_serielNumberFileName);
+                    return serialFile != null;
+                case 2:
+                    var loginFile = await _storageFolder.TryGetItemAsync(_loginsFileName);
+                    return loginFile != null;
+                default:
+                    return false;
             }
-            return serielNum;
         }
 
-        public List<Submission> LoadSubmissionsFromFile()
+        public async Task<IDictionary<string, bool>> LoadSerielNumbersFromFile()
         {
-            List<Submission> submissionList = new List<Submission>();
-            using (Stream stream = File.Open(_submissionsFileName,FileMode.Open))
-            {
-                var bformatter = new IndiePortable.Formatter.BinaryFormatter();
+            var SerialList = new Dictionary<string, bool>();
 
-                submissionList = (List<Submission>)bformatter.Deserialize(stream);
+            var serializer = new DataContractSerializer(typeof(Dictionary<string, bool>));
+            using (var stream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(_serielNumberFileName))
+            {
+                SerialList = (Dictionary<string, bool>)serializer.ReadObject(stream);
             }
+            //await Task.Delay(1000);
+            return SerialList;
+        }
+
+        //Old Code-------------------------------------------
+        //using (StreamReader streamReader = new StreamReader(new FileStream(_serielNumberFileName, FileMode.Open)))
+        //{
+        //    while ((line = streamReader.ReadLine()) != null)
+        //    {
+        //        serielNum.Add(line);
+        //    }
+        //}
+        //Old Code---------------------------------------------
+    
+
+        public async Task<IList<Submission>> LoadSubmissionsFromFileAsync()
+        {
+            IList<Submission> submissionList = new List<Submission>();
+            var serializer = new DataContractSerializer(typeof(List<Submission>));
+            using (var stream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(
+                      _submissionsFileName))
+            {
+                submissionList = (List<Submission>)serializer.ReadObject(stream);
+            }
+            //await Task.Delay(1000);
+            return  submissionList;
+
+            //Old Code---------------------------------------------
+            //using (Stream stream = File.Open(_submissionsFileName,FileMode.Open))
+            //{
+            //    var bformatter = new IndiePortable.Formatter.BinaryFormatter();
+
+            //    submissionList = (List<Submission>)bformatter.Deserialize(stream);
+            //}
             //using (StreamReader streamReader = new StreamReader(_submissionsFileName))
             //{
             //    while ((line = streamReader.ReadLine()) != null)
@@ -47,22 +87,33 @@ namespace Core.DataPresistence
             //        submissionList.Add(line);
             //    }
             //}
-            return submissionList;
+            //Old Code---------------------------------------------
+
         }
 
-        public List<string> LoadLoginsFromFile()
+        public async Task<IDictionary<string, string>> LoadLoginsFromFileAsync()
         {
-            string line = "";
-            List<string> loginsList = new List<string>();
-            
-            using (StreamReader streamReader = new StreamReader(new FileStream(_loginsFileName, FileMode.Open)))
+            var loginsList = new Dictionary<string, string>();
+
+            var serializer = new DataContractSerializer(typeof(Dictionary<string, string>));
+            using (var stream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(_loginsFileName))
             {
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    loginsList.Add(line);
-                }
+                loginsList = (Dictionary<string, string>)serializer.ReadObject(stream);
             }
+            //await Task.Delay(1000);
             return loginsList;
         }
+
+            //Old Code---------------------------------------------
+            //using (StreamReader streamReader = new StreamReader(new FileStream(_loginsFileName, FileMode.Open)))
+            //{
+            //    while ((line = streamReader.ReadLine()) != null)
+            //    {
+            //        loginsList.Add(line);
+            //    }
+            //}
+            //Old Code---------------------------------------------
+            //return loginsList;
+        
     }
 }

@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="Martj14UWP.AdminPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Martj14UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:Core.Model"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:DataType="data:SerialModel" x:Key="SerialDataTemplate">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock FontSize="16" Text="{x:Bind key}" HorizontalAlignment="Center" />
+                <TextBlock FontSize="10" Text="{x:Bind value}" HorizontalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:DataType="data:Submission" x:Key="SubmissionDataTemplate">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock FontSize="16" Text="{x:Bind FirstName}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="16" Text="{x:Bind LastName}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="16" Text="{x:Bind Email}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="16" Text="{x:Bind Phonenumber}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="10" Text="{x:Bind Birthdate}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="10" Text="{x:Bind SubmissionDate}" HorizontalAlignment="Left" />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"></RowDefinition>
+            <RowDefinition Height="0.40*"></RowDefinition>
+            <RowDefinition Height="0.40*"></RowDefinition>
+            <RowDefinition Height="0.05*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="Gainsboro">
+            <TextBlock Name="Reg" Text="Admin Page"  
+            TextAlignment="Center" VerticalAlignment="Center"  
+            FontSize="30" FontWeight="Black" FontStyle="Italic"></TextBlock>
+        </Border>
+        <Grid Grid.Row="1">
+            <GridView ItemsSource="{x:Bind submissionList}" ItemTemplate="{StaticResource SubmissionDataTemplate}">
+            </GridView>
+        </Grid>
+        <Grid Grid.Row="2">
+            <GridView ItemsSource="{x:Bind serialList}" ItemTemplate="{StaticResource SerialDataTemplate}">
+            </GridView>
+        </Grid>
+        <Grid Grid.Row="3">
+            <RelativePanel x:Name="inside" Grid.Row="2" HorizontalAlignment="Right">
+                <Button x:Name="Logout" Content="Logout" Height="40" Width="300" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" Click="Logout_Click"></Button>
+            </RelativePanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -29,24 +29,63 @@ namespace Martj14UWP
             this.InitializeComponent();
         }
 
-        private async void Savebtn_OnClick(object sender, RoutedEventArgs e)
+        private void Savebtn_OnClick(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker bw = new BackgroundWorker();
-            IController c = new Controller();
-            int result = 0;
-            result = c.AddSubmission(new Submission(First.Text,Last.Text,Email.Text,Phone.Text, Bithdate.Date ,Password.Text, Serial.Text));
-            switch (result)
+            if (Email.Text.Contains("@") && Email.Text.Contains("."))
             {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                default:
-                    break;
+                int result = 0;
+                result =
+                    Controller.Instance.AddSubmission(new Submission(First.Text, Last.Text, Email.Text, Phone.Text,
+                        BirthDate.Date, Password.Text, Serial.Text));
+                switch (result)
+                {
+                    //Already registred
+                    case 0:
+                        PopupText.Text = "User Already Registred, Login to Claim More Serial Numbers";
+                        Popup.IsOpen = true;
+                        break;
+                    //Invalid Serial
+                    case 1:
+                        PopupText.Text = "Serial Number Is Invalid or Already Claimed";
+                        Popup.IsOpen = true;
+                        break;
+                    //Submission and Serial valid registration complete
+                    case 2:
+                        PopupText.Text = First.Text + " Registred, Login to Claim More Serial Numbers";
+                        Popup.IsOpen = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                PopupText.Text = "Email Is Invalid";
+                Popup.IsOpen = true;
             }
 
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            if (Controller.Instance.LoginChecker(User.Text, UserPassword.Text) && User.Text.Equals("admin"))
+            {
+                this.Frame.Navigate(typeof(AdminPage));
+            }
+            else if (Controller.Instance.LoginChecker(User.Text, UserPassword.Text))
+            {
+                this.Frame.Navigate(typeof(UserPage));
+            }
+            else
+            {
+                PopupText.Text = "User Email or Password Incorrect";
+                Popup.IsOpen = true;
+            }
+        }
+
+        private void PopupBtn_OnClick_Click(object sender, RoutedEventArgs e)
+        {
+            Popup.IsOpen = false;
         }
     }
 }

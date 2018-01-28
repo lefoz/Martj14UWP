@@ -112,6 +112,7 @@
     <Compile Include="DataPresistence\IFileUpStream.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="IController.cs" />
+    <Compile Include="Model\SerialModel.cs" />
     <Compile Include="Model\Submission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ISerielNumberGenerator.cs" />
@@ -127,7 +128,7 @@
       <Version>0.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.4</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
     <PackageReference Include="System.IO.FileSystem.Primitives">
       <Version>4.3.0</Version>
@@ -150,11 +151,6 @@
     <PackageReference Include="WinUX.UWP.Xaml.Controls">
       <Version>2.4.17005.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Logins.dat" />
-    <None Include="SerielNumbers.dat" />
-    <None Include="Submissions.bin" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

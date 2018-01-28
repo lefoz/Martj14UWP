@@ -4,6 +4,6 @@ namespace Core.Repository
 {
     interface ISerielNumberGenerator
     {
-        Dictionary<string, bool> GenerateSerielNumberDictionary(int amount);
+        IDictionary<string, bool> GenerateSerielNumberDictionary(int amount);
     }
 }

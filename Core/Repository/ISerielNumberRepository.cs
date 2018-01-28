@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Core.Model;
 
 namespace Core.Repository
 {
     interface ISerielNumberRepository
     {
-        void GenerateNewSerielNumbers(int amount, Dictionary<string, bool> lotteryDictionary);
-        int LookUpSerielNumber(string serielnumber, Dictionary<string, bool> lotteryDictionary);
-        bool SerielNumbersFromFile(Dictionary<string, bool> lotteryDictionary);
-        void SerielNumbersToFile(Dictionary<string, bool> lotteryDictionary);
+        void GenerateNewSerielNumbers(int amount, IDictionary<string, bool> lotteryDictionary);
+        int LookUpSerielNumber(string serielnumber, IDictionary<string, bool> lotteryDictionary);
+        Task<IDictionary<string, bool>>SerielNumbersFromFile();
+        Task SerielNumbersToFile(IDictionary<string, bool> lotteryDictionary);
+        List<SerialModel> GetSerials(IDictionary<string, bool> lotteryDictionary);
     }
 }

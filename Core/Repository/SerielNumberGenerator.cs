@@ -23,7 +23,7 @@ namespace Core.Repository
         /// </summary>
         /// <param name="amount"></param>
         /// <returns>A Dictionary</returns>
-        public Dictionary<string, bool> GenerateSerielNumberDictionary(int amount)
+        public IDictionary<string, bool> GenerateSerielNumberDictionary(int amount)
         {
             Dictionary<string, bool> _serielDictionary = new Dictionary<string, bool>();
             _random = new Random();
